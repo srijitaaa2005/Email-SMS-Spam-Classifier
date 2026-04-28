@@ -1,7 +1,7 @@
 import streamlit as st
 import pickle
 import string
-
+import os
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
@@ -9,15 +9,12 @@ from nltk.stem.porter import PorterStemmer
 ps=PorterStemmer()
 
 
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
 
-try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('stopwords')
+# Point NLTK to locally downloaded data (Streamlit Cloud + local safe)
+nltk.data.path.append(os.path.join(os.getcwd(), "nltk_data"))
+
+stop_words = set(stopwords.words('english'))
+
 
 def transform_text(text):
   text=text.lower()
@@ -34,7 +31,7 @@ def transform_text(text):
 
   #removing stopwords and punctuations
   for i in text:
-    if i not in stopwords.words('english') and i not in string.punctuation:
+    if i not in stop_words and i not in string.punctuation:
       y.append(i)
 
   text=y[:]
