@@ -8,10 +8,12 @@ from nltk.stem.porter import PorterStemmer
 
 ps=PorterStemmer()
 
+# Download required NLTK data at runtime (safe for Streamlit Cloud)
+nltk.download('stopwords', quiet=True)
+nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)  # needed in newer NLTK versions
 
 
-# Point NLTK to locally downloaded data (Streamlit Cloud + local safe)
-nltk.data.path.append(os.path.join(os.getcwd(), "nltk_data"))
 
 stop_words = set(stopwords.words('english'))
 
